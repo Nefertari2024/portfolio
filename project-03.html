@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国央企工业场景AI产品落地分析 · 谢颖</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --paper: #f7f4ef;
+    --accent: #1a3a8f;
+    --accent-light: #e8edf8;
+    --muted: #6b6b6b;
+    --border: #d8d3cc;
+    --card: #ffffff;
+    --green: #1a6b3a;
+    --green-light: #e8f5ee;
+    --orange: #8f4a1a;
+    --orange-light: #f5ede8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: rgba(247,244,239,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--accent); }
+
+  .nav-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 140px 48px 80px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '03';
+    background: var(--accent);
+    color: white;
+    padding: 2px 8px;
+    font-size: 10px;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.9;
+    max-width: 680px;
+    margin-bottom: 32px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .meta-item span {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 64px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .section-text {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  /* INSIGHT BOX */
+  .insight-box {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-light);
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+
+  .insight-box strong {
+    color: var(--accent);
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* CASE CARDS */
+  .case-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 32px 0;
+  }
+
+  .case-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+
+  .case-card.energy { border-top: 3px solid var(--green); }
+  .case-card.safety { border-top: 3px solid var(--accent); }
+
+  .case-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .case-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .case-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* PAIN POINTS */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 24px 0;
+  }
+
+  .pain-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px;
+  }
+
+  .pain-icon { font-size: 24px; margin-bottom: 12px; }
+
+  .pain-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .pain-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* STRATEGY */
+  .strategy-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    margin-bottom: 2px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 24px;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+
+  .strategy-item:hover { border-color: var(--accent); }
+
+  .strategy-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--border);
+    line-height: 1;
+    padding-top: 4px;
+  }
+
+  .strategy-item:hover .strategy-num { color: var(--accent); }
+
+  .strategy-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .strategy-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .strategy-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid rgba(26,58,143,0.15);
+    margin-top: 10px;
+    margin-right: 6px;
+  }
+
+  /* CASE ANALYSIS */
+  .case-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    margin-bottom: 2px;
+  }
+
+  .case-section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .case-badge.energy {
+    background: var(--green-light);
+    color: var(--green);
+    border: 1px solid rgba(26,107,58,0.2);
+  }
+
+  .case-badge.safety {
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid rgba(26,58,143,0.2);
+  }
+
+  .case-section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .subsection {
+    margin-bottom: 24px;
+  }
+
+  .subsection-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .subsection-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+  }
+
+  .highlight {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .bullet {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.8;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .bullet::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* FRAMEWORK */
+  .framework {
+    background: var(--ink);
+    padding: 48px;
+    margin: 32px 0;
+  }
+
+  .framework-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--paper);
+    margin-bottom: 28px;
+  }
+
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .framework-item {
+    background: #1a1a1a;
+    padding: 24px;
+  }
+
+  .framework-step {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .framework-item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--paper);
+    margin-bottom: 8px;
+  }
+
+  .framework-item-desc {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.7;
+  }
+
+  /* CONCLUSION */
+  .conclusion-box {
+    background: var(--accent);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .conclusion-box::before {
+    content: '"';
+    position: absolute;
+    top: -20px; left: 32px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 160px;
+    color: rgba(255,255,255,0.1);
+    line-height: 1;
+  }
+
+  .conclusion-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: white;
+    line-height: 1.9;
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .bottom-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  .bottom-nav a:hover { color: var(--accent); }
+
+  .bottom-nav-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .bottom-nav-title {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .content { padding: 0 24px 60px; }
+    .case-grid { grid-template-columns: 1fr; }
+    .pain-grid { grid-template-columns: 1fr; }
+    .strategy-item { grid-template-columns: 1fr; }
+    .framework-grid { grid-template-columns: 1fr; }
+    .case-section { padding: 24px; }
+    .framework { padding: 28px; }
+    .conclusion-box { padding: 32px; }
+    .bottom-nav { flex-direction: column; gap: 24px; padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">← 返回作品集</a>
+  <a href="index.html" class="nav-logo">谢颖</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow reveal">Case Study · Industry Analysis</div>
+  <h1 class="hero-title reveal">国央企工业场景<br>AI产品落地的挑战与策略</h1>
+  <p class="hero-desc reveal">
+    基于在工业制造背景国有企业的真实工作经历，结合两个AI落地项目的一手观察，
+    从产品经理视角分析国央企引入AI产品的核心决策逻辑、典型痛点与破局路径。
+  </p>
+  <div class="hero-meta reveal">
+    <div class="meta-item">行业 <span>工业制造 · 国央企</span></div>
+    <div class="meta-item">场景 <span>AI节能 · 安全识别</span></div>
+    <div class="meta-item">视角 <span>AI产品经理</span></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- 背景 -->
+  <div class="section">
+    <div class="section-label reveal">Background · 研究背景</div>
+    <h2 class="section-title reveal">为什么国央企的AI落地这么难？</h2>
+    <p class="section-text reveal">
+      工业AI市场规模持续扩大，但国央企客户的AI采购转化率却远低于预期。
+      技术层面，工业视觉算法已相对成熟；商业层面，头部厂商产品线日益完善。
+      但落地卡点从来不是技术本身，而是<span style="color:var(--ink);font-weight:500">组织决策机制与AI产品设计逻辑之间的错位</span>。
+    </p>
+    <p class="section-text reveal">
+      本报告基于笔者在国有工业制造企业的真实工作经历，
+      结合参与观察两个AI落地项目的一手经验，
+      尝试从产品经理视角提炼国央企AI采购的核心逻辑与破局策略。
+    </p>
+
+    <div class="insight-box reveal">
+      <strong>核心洞察</strong>
+      国央企管理者的决策本质是：<strong>在不出错的前提下，尽可能多创效益。</strong>
+      这意味着AI产品的首要任务不是证明"能做什么"，而是证明"不会出什么问题"。
+      风险控制优先于收益最大化，是理解所有后续策略的基础前提。
+    </div>
+  </div>
+
+  <!-- 两个案例 -->
+  <div class="section">
+    <div class="section-label reveal">Cases · 案例概览</div>
+    <h2 class="section-title reveal">两个真实落地项目</h2>
+
+    <div class="case-grid reveal">
+      <div class="case-card energy">
+        <div class="case-num">案例 01 · Energy</div>
+        <div class="case-title">AI数字化节能设备试点</div>
+        <div class="case-desc">
+          通过AI算法对工业设备能耗数据进行实时分析与优化调度，
+          实现降本增效目标，同时满足"绿色工厂"建设要求。
+          典型客户决策驱动因素：政策合规、成本压力、可量化ROI。
+        </div>
+      </div>
+      <div class="case-card safety">
+        <div class="case-num">案例 02 · Safety</div>
+        <div class="case-title">AI辅助安全隐患识别</div>
+        <div class="case-desc">
+          利用工业视觉AI识别作业现场安全隐患（工人违规行为、
+          环境危险因素等），自动生成安全报告推送至安全员。
+          典型挑战：数据质量差、场景复杂、KPI交付与实际效果的落差。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 核心痛点 -->
+  <div class="section">
+    <div class="section-label reveal">Pain Points · 核心痛点</div>
+    <h2 class="section-title reveal">国央企AI落地的三类典型障碍</h2>
+
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-icon">🔒</div>
+        <div class="pain-title">数据主权焦虑</div>
+        <div class="pain-desc">
+          国央企对数据安全高度敏感，尤其涉及生产数据、人员信息。
+          任何需要数据上云的方案，都会在采购决策链上遭遇强阻力。
+          本地化部署是基本门槛，而非加分项。
+        </div>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-icon">⚖️</div>
+        <div class="pain-title">责任归属模糊</div>
+        <div class="pain-desc">
+          AI系统出现误报或漏报，谁来负责？
+          国企管理者对"AI决策"天然保持距离，
+          更愿意接受"AI辅助+人工确认"的模式，
+          而非让AI直接输出结论并采取行动。
+        </div>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-icon">📊</div>
+        <div class="pain-title">ROI周期压力</div>
+        <div class="pain-desc">
+          国企考核周期通常以年为单位，
+          但AI项目的效果往往需要数据积累才能显现。
+          如何在短期内提供可见的量化成果，
+          是赢得持续支持的关键。
+        </div>
+      </div>
+    </div>
+
+    <!-- 隐性痛点 -->
+    <div class="insight-box reveal" style="border-color: var(--orange); background: var(--orange-light);">
+      <strong style="color: var(--orange);">隐性痛点 · 容易被忽视</strong>
+      国企AI项目还存在一个隐性障碍：<strong>KPI导向与实际效果的撕裂</strong>。
+      领导层要求快速交付"场景应用数量"，但执行层面临数据质量差、人手不足的真实困境。
+      这种上下层信息不对称，往往导致AI系统"上线即死"——数据做出来了，但根本用不起来。
+    </div>
+  </div>
+
+  <!-- 案例深度分析 -->
+  <div class="section">
+    <div class="section-label reveal">Deep Dive · 案例深析</div>
+    <h2 class="section-title reveal">产品视角下的落地路径</h2>
+
+    <!-- 案例一 -->
+    <div class="case-section reveal">
+      <div class="case-section-header">
+        <span class="case-badge energy">案例 01</span>
+        <span class="case-section-title">AI数字化节能设备：如何让保守的决策者点头</span>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-label">客户决策逻辑</div>
+        <p class="subsection-text">
+          节能设备的采购决策通常由生产部门和财务部门联合推动，核心诉求是
+          <span class="highlight">可量化的成本节约</span>。
+          国央企管理者面临双重压力：既要完成降本增效的经营目标，
+          又要对国有资产负责——这意味着任何采购都必须有充分的数据支撑和责任闭环。
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-label">产品切入策略</div>
+        <div class="bullet">
+          <strong>从数据说话开始</strong>——先免费或低成本接入数据采集层，
+          让客户看到真实的能耗数据看板。数据透明本身就能建立信任，
+          也为后续AI优化方案提供弹药。
+        </div>
+        <div class="bullet">
+          <strong>试点先行，降低决策风险</strong>——选择一条生产线做小范围试点，
+          明确承诺试点周期内的可测量目标（如节能X%），
+          让决策者用最小代价验证效果，再推动全厂铺开。
+        </div>
+        <div class="bullet">
+          <strong>绑定政策红利</strong>——将产品与"绿色工厂"认定、
+          碳排放指标挂钩，帮助客户将采购决策转化为政策合规动作，
+          降低内部审批阻力。
+        </div>
+        <div class="bullet">
+          <strong>本地化部署是标配</strong>——数据不出厂区，
+          所有计算在本地完成，明确的数据安全承诺要写进合同，
+          不能只是口头保证。
+        </div>
+      </div>
+    </div>
+
+    <!-- 案例二 -->
+    <div class="case-section reveal">
+      <div class="case-section-header">
+        <span class="case-badge safety">案例 02</span>
+        <span class="case-section-title">AI安全隐患识别：如何在数据质量差的环境下交付价值</span>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-label">真实困境</div>
+        <p class="subsection-text">
+          这个项目暴露了工业AI落地最典型的矛盾：
+          <span class="highlight">管理层要KPI，执行层要质量，两者在资源有限的情况下无法同时满足。</span>
+          安全场景的复杂性（不同工种、不同环境、不同时段）意味着通用算法误报率高，
+          而高质量的定制化数据集需要大量人工标注，但人手严重不足。
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-label">产品设计破局思路</div>
+        <div class="bullet">
+          <strong>人机协作闭环，而非全自动化</strong>——
+          不要承诺"AI自动识别所有隐患"，
+          而是设计"AI初筛→安全员复核确认→确认结果反哺训练"的闭环。
+          这样既能快速上线交付KPI，又能通过真实使用持续提升模型精度。
+        </div>
+        <div class="bullet">
+          <strong>优先级分层，聚焦高价值场景</strong>——
+          不要试图一次性覆盖所有安全场景，
+          而是与客户共同识别出2-3个<span class="highlight">高频、高危、易标注</span>的场景优先突破，
+          形成可复用的算法模板，再横向扩展。
+        </div>
+        <div class="bullet">
+          <strong>降低数据标注门槛</strong>——
+          提供简单易用的标注工具，让安全员在日常巡检中顺手完成数据反馈，
+          而不是额外增加工作量。好的产品设计能把数据生产融入工作流，
+          而不是独立出来成为负担。
+        </div>
+        <div class="bullet">
+          <strong>可视化报告降低验收阻力</strong>——
+          自动生成结构化安全报告，让管理层一眼看到"发现了哪些隐患、处理了哪些"，
+          满足汇报需求的同时，也让AI的价值变得可见可感。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 通用框架 -->
+  <div class="section">
+    <div class="section-label reveal">Framework · 通用策略</div>
+    <h2 class="section-title reveal">向国央企销售AI产品的三步框架</h2>
+    <p class="section-text reveal">
+      基于以上两个案例的分析，可以提炼出一个面向国央企工业AI产品销售的通用思路框架。
+    </p>
+
+    <div class="framework reveal">
+      <div class="framework-title">国央企AI产品落地三步框架</div>
+      <div class="framework-grid">
+        <div class="framework-item">
+          <div class="framework-step">01</div>
+          <div class="framework-item-title">建立信任层</div>
+          <div class="framework-item-desc">
+            数据本地化承诺、试点方案设计、
+            量化ROI测算、责任边界清晰化。
+            让决策者感到"这件事出了问题有人负责，没出问题我有收益"。
+          </div>
+        </div>
+        <div class="framework-item">
+          <div class="framework-step">02</div>
+          <div class="framework-item-title">交付可见价值</div>
+          <div class="framework-item-desc">
+            快速上线，优先聚焦最容易出成果的场景，
+            用数据报告让效果可见。
+            短期内的小胜利是推动大规模采购的最好弹药。
+          </div>
+        </div>
+        <div class="framework-item">
+          <div class="framework-step">03</div>
+          <div class="framework-item-title">构建深度绑定</div>
+          <div class="framework-item-desc">
+            基于客户数据持续优化算法，
+            形成"用得越久越好用"的飞轮效应。
+            同时帮助客户内部培养AI使用习惯，
+            提高迁移成本。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 策略列表 -->
+  <div class="section">
+    <div class="section-label reveal">Strategies · 核心策略</div>
+    <h2 class="section-title reveal">产品经理能做什么</h2>
+
+    <div class="strategy-item reveal">
+      <div class="strategy-num">01</div>
+      <div>
+        <div class="strategy-title">把"风险控制"做成产品功能</div>
+        <div class="strategy-desc">
+          数据安全、权限管控、操作日志、异常告警——
+          这些在to C产品里是加分项，在国央企客户这里是基本门槛。
+          产品设计时要把合规能力前置，而不是等客户问起来再补。
+        </div>
+        <span class="strategy-tag">数据安全</span>
+        <span class="strategy-tag">本地化部署</span>
+        <span class="strategy-tag">权限管理</span>
+      </div>
+    </div>
+
+    <div class="strategy-item reveal">
+      <div class="strategy-num">02</div>
+      <div>
+        <div class="strategy-title">用国企语言定义产品价值</div>
+        <div class="strategy-desc">
+          "降本增效""绿色可持续""数字化转型"不是口号，
+          是国企管理者向上级汇报时真实需要的话语体系。
+          产品经理需要把技术价值翻译成这套语言，
+          让客户的内部推动者有东西可说。
+        </div>
+        <span class="strategy-tag">客户叙事</span>
+        <span class="strategy-tag">政策绑定</span>
+        <span class="strategy-tag">汇报素材</span>
+      </div>
+    </div>
+
+    <div class="strategy-item reveal">
+      <div class="strategy-num">03</div>
+      <div>
+        <div class="strategy-title">设计符合国企节奏的交付路径</div>
+        <div class="strategy-desc">
+          国企决策慢、执行谨慎，产品需要适配这个节奏——
+          提供清晰的试点方案、分阶段交付计划、
+          每个阶段的验收标准。不要试图一次性推大方案，
+          让对方觉得"先试试"的成本极低。
+        </div>
+        <span class="strategy-tag">试点设计</span>
+        <span class="strategy-tag">分阶段交付</span>
+        <span class="strategy-tag">验收标准</span>
+      </div>
+    </div>
+
+    <div class="strategy-item reveal">
+      <div class="strategy-num">04</div>
+      <div>
+        <div class="strategy-title">建立人机协作而非替代的产品理念</div>
+        <div class="strategy-desc">
+          工业场景的AI落地，"替代人"的定位会引发组织阻力。
+          "让人做更有价值的事"才是更容易被接受的叙事。
+          产品设计上保留人工确认环节，
+          不仅降低推广阻力，也确实能提升系统可靠性。
+        </div>
+        <span class="strategy-tag">人机协作</span>
+        <span class="strategy-tag">组织阻力管理</span>
+        <span class="strategy-tag">可靠性</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结论 -->
+  <div class="section">
+    <div class="conclusion-box reveal">
+      <p class="conclusion-text">
+        工业AI不缺技术，缺的是真正理解国央企组织逻辑的产品人。
+        能够在"领导要KPI、执行要质量、数据要安全"的多重约束下，
+        设计出真正能落地的产品路径——
+        这才是AI产品经理在这个赛道的核心价值所在。
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="project-02.html">
+    <div>
+      <span class="bottom-nav-label">← 上一个</span>
+      <span class="bottom-nav-title">内容资产管理项目</span>
+    </div>
+  </a>
+  <a href="index.html">
+    <div style="text-align:right">
+      <span class="bottom-nav-label">返回 →</span>
+      <span class="bottom-nav-title">作品集首页</span>
+    </div>
+  </a>
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
