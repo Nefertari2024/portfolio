@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-zh="项目01 · 员工培训管理系统 · 谢颖" data-en="Project 01 · Training Management System · Xie Ying">项目01 · 员工培训管理系统 · 谢颖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f0f0f;
+      --paper: #f7f4ef;
+      --accent: #1a3a8f;
+      --accent-light: #e8edf8;
+      --muted: #6b6b6b;
+      --border: #d8d3cc;
+      --card-bg: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    body[data-lang="zh"] .lang-en { display: none !important; }
+    body[data-lang="en"] .lang-zh { display: none !important; }
+    body[data-lang="en"] { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: rgba(247,244,239,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-logo {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .lang-switch {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+    }
+
+    .lang-switch button {
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .lang-switch button.active {
+      background: var(--accent);
+      color: var(--paper);
+    }
+
+    .lang-switch button:not(.active):hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* HERO */
+    .project-hero {
+      padding: 140px 48px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .project-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .project-eyebrow::before {
+      content: '01';
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 2px 8px;
+      font-size: 10px;
+    }
+
+    .project-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .project-subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 32px;
+    }
+
+    .meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .hero-stat {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+
+    .hero-stat-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* CONTENT */
+    .content-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 48px;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-heading {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .section-text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.9;
+      max-width: 720px;
+    }
+
+    /* PROBLEM */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 32px;
+    }
+
+    .problem-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 28px;
+    }
+
+    .problem-icon { font-size: 24px; margin-bottom: 12px; }
+
+    .problem-title {
+      font-weight: 500;
+      font-size: 15px;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .problem-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ITERATION TIMELINE */
+    .timeline {
+      margin-top: 48px;
+      position: relative;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      margin-bottom: 2px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .timeline-item:hover { border-color: var(--accent); }
+
+    .timeline-left {
+      background: var(--accent-light);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .timeline-version {
+      font-family: 'DM Mono', monospace;
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .timeline-version-label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .timeline-right {
+      padding: 36px 36px 36px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .timeline-content h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .timeline-content p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .feature-list li {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+    }
+
+    .timeline-screenshot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screenshot-frame {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    /* V3 DEMO */
+    .demo-section {
+      background: var(--ink);
+      padding: 80px 0;
+    }
+
+    .demo-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .demo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+    }
+
+    .demo-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--paper);
+      margin-bottom: 8px;
+    }
+
+    .demo-desc {
+      font-size: 14px;
+      color: #888;
+    }
+
+    .demo-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      padding: 6px 14px;
+      border: 1px solid #333;
+      color: #888;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .demo-frame {
+      border: 1px solid #333;
+      border-radius: 4px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .demo-frame iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+      display: block;
+    }
+
+    /* OUTCOMES */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 32px;
+    }
+
+    .outcome-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .outcome-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .outcome-label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* REFLECTION */
+    .reflection-box {
+      background: var(--accent);
+      padding: 48px;
+      margin-top: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reflection-box::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 32px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 160px;
+      color: rgba(255,255,255,0.1);
+      line-height: 1;
+    }
+
+    .reflection-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      color: white;
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    /* NAV BOTTOM */
+    .bottom-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .bottom-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .bottom-nav a:hover { color: var(--accent); }
+
+    .bottom-nav-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .bottom-nav-title {
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    /* ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .project-hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
+      .hero-stats { display: none; }
+      .content-section { padding: 60px 24px; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-left { padding: 24px; }
+      .timeline-right { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
+      .outcomes-grid { grid-template-columns: 1fr 1fr; }
+      .demo-inner { padding: 0 24px; }
+      .bottom-nav { padding: 40px 24px; flex-direction: column; gap: 24px; }
+    }
+  </style>
+</head>
+<body data-lang="zh">
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">
+    <span class="lang-zh">← 返回作品集</span>
+    <span class="lang-en">← Back to Portfolio</span>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-logo">谢颖</a>
+    <div class="lang-switch">
+      <button id="btn-zh" class="active" onclick="setLang('zh')">中</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="project-hero">
+  <div class="reveal">
+    <div class="project-eyebrow">
+      <span class="lang-zh">数字化工具实践 · 产品迭代</span>
+      <span class="lang-en">Digital Tool Practice · Product Iteration</span>
+    </div>
+    <h1 class="project-title">
+      <span class="lang-zh">员工培训<br>管理系统</span>
+      <span class="lang-en">Internal Training<br>Management System</span>
+    </h1>
+    <p class="project-subtitle">
+      <span class="lang-zh">从真实业务痛点出发，独立完成从需求洞察到产品落地的全链路实践。历经三次迭代，将一个简单的录入工具演进为具备数据看板、智能筛选与权限隔离架构的完整管理系统。</span>
+      <span class="lang-en">Starting from a real business pain point, independently completed the full process from need insight to product delivery. Through three iterations, evolved a simple input tool into a complete management system with data dashboards, smart filtering, and permission isolation architecture.</span>
+    </p>
+    <div class="meta-tags">
+      <span class="meta-tag"><span class="lang-zh">需求分析</span><span class="lang-en">Need Analysis</span></span>
+      <span class="meta-tag"><span class="lang-zh">产品设计</span><span class="lang-en">Product Design</span></span>
+      <span class="meta-tag"><span class="lang-zh">前端开发</span><span class="lang-en">Front-end Dev</span></span>
+      <span class="meta-tag"><span class="lang-zh">数字化工具</span><span class="lang-en">Digital Tools</span></span>
+      <span class="meta-tag"><span class="lang-zh">数据可视化</span><span class="lang-en">Data Viz</span></span>
+      <span class="meta-tag"><span class="lang-zh">权限架构</span><span class="lang-en">Permission Design</span></span>
+    </div>
+  </div>
+
+  <div class="hero-stats reveal">
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">
+        <span class="lang-zh">版本迭代次数</span>
+        <span class="lang-en">Iteration Cycles</span>
+      </div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100%</div>
+      <div class="hero-stat-label">
+        <span class="lang-zh">独立交付</span>
+        <span class="lang-en">Solo Delivery</span>
+      </div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">5+</div>
+      <div class="hero-stat-label">
+        <span class="lang-zh">核心功能模块</span>
+        <span class="lang-en">Core Features</span>
+      </div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">0→1</div>
+      <div class="hero-stat-label">
+        <span class="lang-zh">从痛点到落地</span>
+        <span class="lang-en">Pain to Product</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="content-section">
+  <div class="section-label reveal">
+    <span class="lang-zh">Problem · 发现问题</span>
+    <span class="lang-en">Problem · Identifying the Pain</span>
+  </div>
+  <h2 class="section-heading reveal">
+    <span class="lang-zh">为什么要做这个工具？</span>
+    <span class="lang-en">Why Build This Tool?</span>
+  </h2>
+  <p class="section-text reveal">
+    <span class="lang-zh">在日常工作中，内部培训活动的台账管理完全依赖人工Excel记录，存在效率低、易出错、难查询等核心痛点。我决定借助数字化工具自主搭建一套半自动化管理系统来解决这些问题。</span>
+    <span class="lang-en">In daily work, internal training records were managed entirely through manual Excel entries — inefficient, error-prone, and hard to query. I decided to leverage digital tools to independently build a semi-automated management system to address these pain points.</span>
+  </p>
+
+  <div class="problem-grid">
+    <div class="problem-card reveal">
+      <div class="problem-icon">📋</div>
+      <div class="problem-title">
+        <span class="lang-zh">手工记录效率低</span>
+        <span class="lang-en">Manual Recording Inefficient</span>
+      </div>
+      <div class="problem-desc">
+        <span class="lang-zh">每次活动后需手动整理Excel，字段不统一，耗时且容易遗漏关键信息。</span>
+        <span class="lang-en">Manual Excel sorting after each event, with inconsistent fields — time-consuming and prone to omissions.</span>
+      </div>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon">🔍</div>
+      <div class="problem-title">
+        <span class="lang-zh">查询统计繁琐</span>
+        <span class="lang-en">Tedious Queries & Stats</span>
+      </div>
+      <div class="problem-desc">
+        <span class="lang-zh">要统计某人的参与记录或某类活动的数据，需要人工筛选，效率极低。</span>
+        <span class="lang-en">Counting one person's participation or filtering by activity type required manual sorting — extremely slow.</span>
+      </div>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon">📊</div>
+      <div class="problem-title">
+        <span class="lang-zh">缺乏数据洞察</span>
+        <span class="lang-en">Lack of Data Insight</span>
+      </div>
+      <div class="problem-desc">
+        <span class="lang-zh">无法直观看到培训频次、参与趋势等数据，难以支撑管理决策。</span>
+        <span class="lang-en">No clear visibility into training frequency or participation trends — hard to support management decisions.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ITERATION -->
+<div class="content-section" style="padding-top: 0;">
+  <div class="section-label reveal">
+    <span class="lang-zh">Iteration · 迭代历程</span>
+    <span class="lang-en">Iteration · The Evolution</span>
+  </div>
+  <h2 class="section-heading reveal">
+    <span class="lang-zh">三个版本，一步步进化</span>
+    <span class="lang-en">Three Versions, Step by Step</span>
+  </h2>
+
+  <div class="timeline">
+
+    <!-- V1 -->
+    <div class="timeline-item reveal">
+      <div class="timeline-left">
+        <div class="timeline-version">V1</div>
+        <div class="timeline-version-label">
+          <span class="lang-zh">基础版本<br>MVP验证</span>
+          <span class="lang-en">Foundation<br>MVP Validation</span>
+        </div>
+      </div>
+      <div class="timeline-right">
+        <div class="timeline-content">
+          <h3>
+            <span class="lang-zh">核心录入 + Excel导出</span>
+            <span class="lang-en">Core Input + Excel Export</span>
+          </h3>
+          <p>
+            <span class="lang-zh">第一版聚焦解决最核心的痛点：让记录变得简单，让导出变得一键完成。用最小可用产品验证工具的可行性与实际价值。</span>
+            <span class="lang-en">The first version focused on the core pain: simplify recording, enable one-click export. Used MVP to validate the tool's feasibility and real value.</span>
+          </p>
+          <ul class="feature-list">
+            <li><span class="lang-zh">培训内容、日期、学时、参与人员录入</span><span class="lang-en">Input fields: content, date, duration, participants</span></li>
+            <li><span class="lang-zh">实时展示所有培训记录列表</span><span class="lang-en">Real-time list of all training records</span></li>
+            <li><span class="lang-zh">一键导出为标准Excel格式</span><span class="lang-en">One-click export to standard Excel format</span></li>
+          </ul>
+        </div>
+        <div class="timeline-screenshot">
+          <div class="screenshot-frame">
+            <img src="v1.jpg" alt="V1版本截图" onerror="this.parentElement.style.background='var(--accent-light)';this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--muted);font-size:13px\'>V1 Screenshot</div>'">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- V2 -->
+    <div class="timeline-item reveal">
+      <div class="timeline-left">
+        <div class="timeline-version">V2</div>
+        <div class="timeline-version-label">
+          <span class="lang-zh">功能增强<br>解决新需求</span>
+          <span class="lang-en">Enhancement<br>New Use Cases</span>
+        </div>
+      </div>
+      <div class="timeline-right">
+        <div class="timeline-content">
+          <h3>
+            <span class="lang-zh">个人记录查询 + 定向导出</span>
+            <span class="lang-en">Personal Query + Targeted Export</span>
+          </h3>
+          <p>
+            <span class="lang-zh">V1上线后发现新需求：需要快速查询某位成员的个人参与记录并单独导出。V2针对性地增加了个人维度的查询与导出功能。</span>
+            <span class="lang-en">After V1 launched, a new need emerged: quickly query an individual's records and export separately. V2 added personal-dimension query and export functions accordingly.</span>
+          </p>
+          <ul class="feature-list">
+            <li><span class="lang-zh">按姓名查找个人培训记录</span><span class="lang-en">Search personal training records by name</span></li>
+            <li><span class="lang-zh">个人记录单独导出为Excel</span><span class="lang-en">Export individual records to Excel separately</span></li>
+            <li><span class="lang-zh">优化整体布局与交互体验</span><span class="lang-en">Improved layout and interaction experience</span></li>
+          </ul>
+        </div>
+        <div class="timeline-screenshot">
+          <div class="screenshot-frame">
+            <img src="v2.jpg" alt="V2版本截图" onerror="this.parentElement.style.background='var(--accent-light)';this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--muted);font-size:13px\'>V2 Screenshot</div>'">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- V3 -->
+    <div class="timeline-item reveal">
+      <div class="timeline-left">
+        <div class="timeline-version">V3</div>
+        <div class="timeline-version-label">
+          <span class="lang-zh">完整系统<br>数据驱动</span>
+          <span class="lang-en">Full System<br>Data-Driven</span>
+        </div>
+      </div>
+      <div class="timeline-right" style="grid-template-columns: 1fr;">
+        <div class="timeline-content">
+          <h3>
+            <span class="lang-zh">数据看板 + 完整数据管理</span>
+            <span class="lang-en">Dashboard + Full Data Management</span>
+          </h3>
+          <p>
+            <span class="lang-zh">V3是一次质的跃升——从工具升级为系统。新增可视化数据看板，让管理者一眼掌握培训全貌；完善数据管理能力，支持备份、恢复与操作日志；同步规划知识库助手方案，探索权限隔离架构。</span>
+            <span class="lang-en">V3 marks a qualitative leap — from tool to system. Added visualization dashboard so managers can grasp the full picture at a glance; improved data management with backup, restore, and operation logs; concurrently designed a knowledge assistant solution exploring permission isolation architecture.</span>
+          </p>
+          <ul class="feature-list">
+            <li><span class="lang-zh">数据看板：总次数、总时长、参与人次实时统计</span><span class="lang-en">Dashboard: real-time stats on sessions, duration, participants</span></li>
+            <li><span class="lang-zh">可视化图表：培训类型分布 + 月度参与趋势</span><span class="lang-en">Charts: training type distribution + monthly trends</span></li>
+            <li><span class="lang-zh">多维筛选：按类型、年份、月份、关键词搜索</span><span class="lang-en">Multi-dimensional filters: by type, year, month, keyword</span></li>
+            <li><span class="lang-zh">数据管理:JSON备份与恢复、操作日志追踪</span><span class="lang-en">Data management: JSON backup/restore, operation log tracking</span></li>
+            <li><span class="lang-zh">知识库助手方案：规划前后端分离、权限隔离架构</span><span class="lang-en">Knowledge assistant: front-end / back-end separation, permission isolation</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DEMO -->
+<div class="demo-section">
+  <div class="demo-inner">
+    <div class="demo-header reveal">
+      <div>
+        <div class="demo-title">
+          <span class="lang-zh">V3 · 在线演示</span>
+          <span class="lang-en">V3 · Live Demo</span>
+        </div>
+        <div class="demo-desc">
+          <span class="lang-zh">以下为员工培训管理系统完整版，可直接操作体验</span>
+          <span class="lang-en">Full version of the system below — try it interactively</span>
+        </div>
+      </div>
+      <div class="demo-badge">Live Demo</div>
+    </div>
+    <div class="demo-frame reveal">
+      <iframe src="员工培训管理系统_V2.0.html" title="员工培训管理系统 V3演示"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- OUTCOMES -->
+<div class="content-section">
+  <div class="section-label reveal">
+    <span class="lang-zh">Outcomes · 项目成果</span>
+    <span class="lang-en">Outcomes · What I Learned</span>
+  </div>
+  <h2 class="section-heading reveal">
+    <span class="lang-zh">做这件事让我学到了什么</span>
+    <span class="lang-en">What This Project Taught Me</span>
+  </h2>
+
+  <div class="outcomes-grid">
+    <div class="outcome-card reveal">
+      <div class="outcome-num">3x</div>
+      <div class="outcome-label">
+        <span class="lang-zh">版本迭代，每次都从真实使用反馈出发</span>
+        <span class="lang-en">Iterations, each driven by real user feedback</span>
+      </div>
+    </div>
+    <div class="outcome-card reveal">
+      <div class="outcome-num">
+        <span class="lang-zh">闭环</span>
+        <span class="lang-en">Loop</span>
+      </div>
+      <div class="outcome-label">
+        <span class="lang-zh">从需求洞察到产品落地，独立完成全链路</span>
+        <span class="lang-en">From need insight to product delivery — solo end-to-end</span>
+      </div>
+    </div>
+    <div class="outcome-card reveal">
+      <div class="outcome-num">
+        <span class="lang-zh">采纳</span>
+        <span class="lang-en">Adopted</span>
+      </div>
+      <div class="outcome-label">
+        <span class="lang-zh">真实业务场景持续使用，并产生新需求反哺迭代</span>
+        <span class="lang-en">Continuously used in real business, generating new needs that fuel iteration</span>
+      </div>
+    </div>
+    <div class="outcome-card reveal">
+      <div class="outcome-num">
+        <span class="lang-zh">安全</span>
+        <span class="lang-en">Secure</span>
+      </div>
+      <div class="outcome-label">
+        <span class="lang-zh">主动规划数据安全与权限隔离方案</span>
+        <span class="lang-en">Proactively designed data security & permission isolation</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflection-box reveal">
+    <p class="reflection-text">
+      <span class="lang-zh">这个项目让我真正理解了什么是产品思维——不是有了技术才去找问题，而是发现真实痛点之后，再用最合适的工具去解决它。每一次迭代都来自真实使用反馈，而不是凭空想象"用户可能需要什么"。这种"识别痛点 → 快速验证 → 持续优化"的方法论，同样适用于在大型企业成熟系统基础上做局部体验优化与工具推广。</span>
+      <span class="lang-en">This project gave me a real understanding of product thinking — not finding problems because you have the technology, but using the most fitting tool after spotting a real pain. Every iteration came from real usage feedback, not from imagining "what users might need". This methodology of "spot pain → rapid validate → continuously optimize" applies equally well to local experience optimization and tool adoption within mature enterprise systems.</span>
+    </p>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="index.html">
+    <div>
+      <span class="bottom-nav-label">
+        <span class="lang-zh">← 返回</span>
+        <span class="lang-en">← Back</span>
+      </span>
+      <span class="bottom-nav-title">
+        <span class="lang-zh">作品集首页</span>
+        <span class="lang-en">Portfolio Home</span>
+      </span>
+    </div>
+  </a>
+  <a href="project-02.html">
+    <div style="text-align:right">
+      <span class="bottom-nav-label">
+        <span class="lang-zh">下一个项目 →</span>
+        <span class="lang-en">Next Project →</span>
+      </span>
+      <span class="bottom-nav-title">
+        <span class="lang-zh">企业内容资产管理与传播实践</span>
+        <span class="lang-en">Content Architecture & Adoption Practice</span>
+      </span>
+    </div>
+  </a>
+</div>
+
+<script>
+  // Bilingual Toggle
+  function setLang(lang) {
+    document.body.setAttribute('data-lang', lang);
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+    const title = document.querySelector('title');
+    if (title) {
+      title.textContent = lang === 'zh' ? title.dataset.zh : title.dataset.en;
+    }
+  }
+
+  (function() {
+    let saved = 'zh';
+    try { saved = localStorage.getItem('portfolio-lang') || 'zh'; } catch(e) {}
+    setLang(saved);
+  })();
+
+  // Reveal animation
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

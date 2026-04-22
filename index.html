@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-zh="谢颖 · 数字化产品实践者" data-en="Xie Ying · Digital Product Practitioner">谢颖 · 数字化产品实践者</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f0f0f;
+      --paper: #f7f4ef;
+      --accent: #1a3a8f;
+      --accent-light: #e8edf8;
+      --muted: #6b6b6b;
+      --border: #d8d3cc;
+      --tag-bg: #eef1f9;
+      --card-bg: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ── Bilingual Toggle ── */
+    body[data-lang="zh"] .lang-en { display: none !important; }
+    body[data-lang="en"] .lang-zh { display: none !important; }
+    body[data-lang="en"] { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif; }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: rgba(247, 244, 239, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── Lang Switcher ── */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+    }
+
+    .lang-switch button {
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .lang-switch button.active {
+      background: var(--accent);
+      color: var(--paper);
+    }
+
+    .lang-switch button:not(.active):hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 48px 80px;
+      gap: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-text { animation: fadeUp 0.8s ease both; }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .hero-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-name span {
+      display: block;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-top: 12px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .hero-desc strong {
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--ink);
+      color: var(--paper);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      border-radius: 2px;
+      margin-right: 12px;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-cta-ghost {
+      display: inline-block;
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--ink);
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+
+    .hero-cta-ghost:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* ── HERO VISUAL ── */
+    .hero-visual { animation: fadeUp 0.8s 0.2s ease both; }
+
+    .hero-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 40px;
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+
+    .card-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    .stat-item { border-left: 2px solid var(--accent); padding-left: 14px; }
+
+    .stat-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--accent);
+      padding: 5px 12px;
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── DIVIDER ── */
+    .full-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 48px;
+    }
+
+    /* ── SECTION ── */
+    section, .thinking-section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+    .thinking-section { max-width: none; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 80px;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    .about-text strong {
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .about-sidebar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 36px;
+      border-radius: 4px;
+      align-self: start;
+    }
+
+    .sidebar-item {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-item:last-child { border-bottom: none; }
+
+    .sidebar-item-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-item-value {
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 40px;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--ink);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 32px;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+      box-shadow: 0 8px 32px rgba(26, 58, 143, 0.08);
+    }
+
+    .project-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .project-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .project-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 14px;
+    }
+
+    .project-outcomes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .outcome-tag {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: 0.03em;
+    }
+
+    .project-arrow {
+      font-size: 32px;
+      color: var(--muted);
+      transition: all 0.3s;
+    }
+
+    .project-card:hover .project-arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* ── THINKING (DARK) ── */
+    .thinking-section {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 100px 48px;
+    }
+
+    .thinking-inner { max-width: 1200px; margin: 0 auto; }
+
+    .thinking-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .thinking-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 36px;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .thinking-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--accent-light);
+      transform: translateY(-4px);
+    }
+
+    .thinking-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .thinking-card-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--paper);
+    }
+
+    .thinking-card-text {
+      font-size: 14px;
+      color: rgba(247, 244, 239, 0.75);
+      line-height: 1.8;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      text-align: center;
+      padding: 120px 48px;
+    }
+
+    .contact-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .contact-title span {
+      color: var(--accent);
+    }
+
+    .contact-desc {
+      font-size: 16px;
+      color: #555;
+      max-width: 540px;
+      margin: 0 auto 48px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .contact-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 28px;
+      border-radius: 4px;
+    }
+
+    .contact-icon { font-size: 24px; margin-bottom: 12px; }
+
+    .contact-item-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .contact-item-value { font-size: 14px; color: var(--ink); word-break: break-all; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+      .hero-name { font-size: 44px; }
+      section, .thinking-section { padding: 60px 24px; }
+      .section-title { font-size: 28px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .project-card { grid-template-columns: auto 1fr; padding: 28px; gap: 20px; }
+      .project-arrow { display: none; }
+      .thinking-grid { grid-template-columns: 1fr; }
+      .contact-title { font-size: 32px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .full-divider { margin: 0 24px; }
+    }
+  </style>
+</head>
+<body data-lang="zh">
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-logo">谢颖 · Xie Ying</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about" data-zh="关于" data-en="ABOUT">关于</a></li>
+      <li><a href="#projects" data-zh="项目" data-en="WORK">项目</a></li>
+      <li><a href="#contact" data-zh="联系" data-en="CONTACT">联系</a></li>
+    </ul>
+    <div class="lang-switch">
+      <button id="btn-zh" class="active" onclick="setLang('zh')">中</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">
+      <span class="lang-zh">Digital Product · Industrial Scenarios · AI Application</span>
+      <span class="lang-en">Digital Product · Industrial Scenarios · AI Application</span>
+    </div>
+    <h1 class="hero-name">
+      <span class="lang-zh">谢颖</span>
+      <span class="lang-en" style="display:inline">Xie Ying</span>
+      <span>Nanjing · China</span>
+    </h1>
+    <p class="hero-desc">
+      <span class="lang-zh">南京大学硕士，专注<strong>复杂业务场景下的数字化产品实践</strong>。擅长在成熟系统基础上识别优化缝隙、推动工具落地，具备从需求洞察到迭代交付的完整经验。</span>
+      <span class="lang-en">Master's degree from Nanjing University. Focused on <strong>digital product practice in complex business contexts</strong>. Skilled at identifying optimization gaps within mature systems and driving tool adoption — with end-to-end experience from insight to iterative delivery.</span>
+    </p>
+    <a href="#projects" class="hero-cta">
+      <span class="lang-zh">查看项目 →</span>
+      <span class="lang-en">View Projects →</span>
+    </a>
+    <a href="#contact" class="hero-cta-ghost">
+      <span class="lang-zh">联系我</span>
+      <span class="lang-en">Contact</span>
+    </a>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="card-label">// Profile Overview</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-num">985</div>
+          <div class="stat-label">
+            <span class="lang-zh">南京大学硕士</span>
+            <span class="lang-en">Master's, Nanjing Univ.</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">
+            <span class="lang-zh">数字化实践项目</span>
+            <span class="lang-en">Digital Practice Projects</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100+</div>
+          <div class="stat-label">
+            <span class="lang-zh">专业内容文稿</span>
+            <span class="lang-en">Professional Documents</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">CET6</div>
+          <div class="stat-label">
+            <span class="lang-zh">567分 英语能力</span>
+            <span class="lang-en">English Proficiency</span>
+          </div>
+        </div>
+      </div>
+      <div class="skill-tags">
+        <span class="tag"><span class="lang-zh">数字化产品</span><span class="lang-en">Digital Product</span></span>
+        <span class="tag"><span class="lang-zh">工业场景</span><span class="lang-en">Industrial Context</span></span>
+        <span class="tag"><span class="lang-zh">需求分析</span><span class="lang-en">Requirement Analysis</span></span>
+        <span class="tag"><span class="lang-zh">内容策略</span><span class="lang-en">Content Strategy</span></span>
+        <span class="tag"><span class="lang-zh">项目管理</span><span class="lang-en">Project Management</span></span>
+        <span class="tag"><span class="lang-zh">B端沟通</span><span class="lang-en">B2B Communication</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-divider">
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">
+      <span class="lang-zh">关于我</span>
+      <span class="lang-en">About</span>
+    </h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        <span class="lang-zh">我是一名具备<strong>工业制造背景与数字化实践经验</strong>的产品方向探索者。在国有工业制造企业任职期间，我深度参与企业内部流程的数字化优化进程，亲历从需求识别、方案设计到工具交付与迭代的完整链路。</span>
+        <span class="lang-en">I'm a product practitioner with <strong>industrial manufacturing background and hands-on digital experience</strong>. While working at a state-owned industrial manufacturing enterprise, I have been deeply involved in the digital optimization of internal processes — covering the full chain from need identification, solution design, tool delivery, to iteration.</span>
+      </p>
+      <p>
+        <span class="lang-zh">我相信，数字化产品经理的核心价值不在于技术本身的炫目，而在于<strong>对真实业务场景的敏锐洞察、跨部门的有效沟通，以及让复杂工具真正被业务方接受并用起来的落地能力</strong>。</span>
+        <span class="lang-en">I believe the core value of a digital product manager lies not in the glamour of technology, but in <strong>keen insight into real business scenarios, effective cross-functional communication, and the ability to make complex tools truly accepted and used by business partners</strong>.</span>
+      </p>
+      <p>
+        <span class="lang-zh">在主职工作之外，我持续探索数字化工具的自主开发：独立设计并迭代一款<strong>半自动化信息管理系统</strong>，从V1.0到V3.0完成功能跃升，实践了完整的产品思维闭环。</span>
+        <span class="lang-en">Beyond my main role, I have continuously explored independent digital tool development: designing and iterating a <strong>semi-automated information management system</strong> from V1.0 to V3.0 — demonstrating a complete product thinking loop.</span>
+      </p>
+    </div>
+
+    <div class="about-sidebar reveal">
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">
+          <span class="lang-zh">教育背景</span><span class="lang-en">Education</span>
+        </div>
+        <div class="sidebar-item-value">
+          <span class="lang-zh">南京大学 · 中国语言文学<br>硕士 2021—2024</span>
+          <span class="lang-en">Nanjing University<br>M.A. Chinese Literature, 2021—2024</span>
+        </div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">
+          <span class="lang-zh">行业背景</span><span class="lang-en">Industry</span>
+        </div>
+        <div class="sidebar-item-value">
+          <span class="lang-zh">工业制造 · 国有企业<br>企业文化 / 内容 / 数字化</span>
+          <span class="lang-en">Industrial Manufacturing · SOE<br>Corporate Culture / Content / Digital</span>
+        </div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">
+          <span class="lang-zh">核心能力</span><span class="lang-en">Core Skills</span>
+        </div>
+        <div class="sidebar-item-value">
+          <span class="lang-zh">需求分析 · 内容策略<br>数字化工具开发 · 跨部门协作</span>
+          <span class="lang-en">Requirement Analysis · Content Strategy<br>Digital Tool Development · Cross-functional Collaboration</span>
+        </div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-item-label">
+          <span class="lang-zh">意向方向</span><span class="lang-en">Direction</span>
+        </div>
+        <div class="sidebar-item-value">
+          <span class="lang-zh">数字化产品经理<br>工业场景 · AI应用 · 工具推广</span>
+          <span class="lang-en">Digital Product Manager<br>Industrial Scenarios · AI · Tool Adoption</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">
+      <span class="lang-zh">项目经历</span>
+      <span class="lang-en">Selected Work</span>
+    </h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <a href="project-01.html" class="project-card reveal">
+      <div class="project-num">01</div>
+      <div>
+        <div class="project-category">Digital Tool · Product Design · Iteration</div>
+        <div class="project-title">
+          <span class="lang-zh">员工培训管理系统 V1.0 → V3.0</span>
+          <span class="lang-en">Training Management System V1.0 → V3.0</span>
+        </div>
+        <div class="project-desc">
+          <span class="lang-zh">针对内部培训台账人工统计低效的真实痛点，独立完成从需求洞察、方案设计到前端实现的全流程实践。三轮迭代逐步完善：V1.0基础录入与导出、V2.0增加查询与定向导出、V3.0升级为可视化看板与权限隔离架构。完整体现"识别痛点 → 快速验证 → 持续优化"的产品思维。</span>
+          <span class="lang-en">Tackled the real pain point of inefficient manual tracking of internal training records. Independently completed the full process from need insight, solution design to front-end implementation. Three iterations: V1.0 basic input/export, V2.0 personal query and targeted export, V3.0 visualization dashboard and permission isolation. Full embodiment of "identify pain → rapid validation → continuous optimization" product thinking.</span>
+        </div>
+        <div class="project-outcomes">
+          <span class="outcome-tag"><span class="lang-zh">需求分析</span><span class="lang-en">Need Analysis</span></span>
+          <span class="outcome-tag"><span class="lang-zh">产品迭代</span><span class="lang-en">Iteration</span></span>
+          <span class="outcome-tag"><span class="lang-zh">数据可视化</span><span class="lang-en">Data Viz</span></span>
+          <span class="outcome-tag"><span class="lang-zh">权限架构</span><span class="lang-en">Permission Design</span></span>
+          <span class="outcome-tag"><span class="lang-zh">跨部门沟通</span><span class="lang-en">Cross-team</span></span>
+        </div>
+      </div>
+      <div class="project-arrow">→</div>
+    </a>
+
+    <!-- Project 2 -->
+    <a href="project-02.html" class="project-card reveal">
+      <div class="project-num">02</div>
+      <div>
+        <div class="project-category">Content Architecture · Visualization · Adoption</div>
+        <div class="project-title">
+          <span class="lang-zh">企业内容资产管理与传播实践</span>
+          <span class="lang-en">Content Architecture & Adoption Practice</span>
+        </div>
+        <div class="project-desc">
+          <span class="lang-zh">统筹品牌展厅与文化宣传视频两大内容资产项目，将复杂、抽象的企业信息转化为<strong>逻辑清晰、视觉友好、易于传播</strong>的物料。该能力可直接迁移至数字化场景：将SAP IBP、S/4HANA等复杂工具的使用方法转化为清晰可读的操作手册、培训材料与思维导图，赋能业务方真正理解和使用。</span>
+          <span class="lang-en">Coordinated two key content asset projects: brand exhibition hall and corporate culture videos. Transformed complex, abstract corporate information into <strong>logically clear, visually friendly, easily-shareable</strong> materials. This skill is directly transferable to digital contexts — turning the usage of complex systems like SAP IBP and S/4HANA into readable manuals, training materials, and visual guides that genuinely empower business users.</span>
+        </div>
+        <div class="project-outcomes">
+          <span class="outcome-tag"><span class="lang-zh">信息架构</span><span class="lang-en">Info Architecture</span></span>
+          <span class="outcome-tag"><span class="lang-zh">复杂内容可视化</span><span class="lang-en">Visualization</span></span>
+          <span class="outcome-tag"><span class="lang-zh">工具推广</span><span class="lang-en">Tool Adoption</span></span>
+          <span class="outcome-tag"><span class="lang-zh">多方协作</span><span class="lang-en">Multi-party Collab</span></span>
+        </div>
+      </div>
+      <div class="project-arrow">→</div>
+    </a>
+
+    <!-- Project 3 -->
+    <a href="project-03.html" class="project-card reveal">
+      <div class="project-num">03</div>
+      <div>
+        <div class="project-category">Case Study · Industry Analysis · Product Strategy</div>
+        <div class="project-title">
+          <span class="lang-zh">工业制造场景下数字化项目落地分析</span>
+          <span class="lang-en">Digital Implementation Analysis in Industrial Manufacturing</span>
+        </div>
+        <div class="project-desc">
+          <span class="lang-zh">基于工业制造企业的真实观察，围绕AI节能设备与AI安全识别两个落地项目，从产品视角分析大型工业企业引入数字化产品的核心决策逻辑、典型障碍与破局路径。提炼可复用的三步框架："建立信任层 → 交付可见价值 → 构建深度绑定"——同样适用于跨国企业在不同区域市场的本地化数字化推广。</span>
+          <span class="lang-en">Based on real observations from industrial manufacturing enterprises, analyzed two implementation projects (AI energy-saving devices and AI safety identification) from a product perspective. Examined the core decision logic, typical barriers, and breakthrough paths for large industrial enterprises adopting digital products. Distilled a reusable three-step framework: "Build Trust → Deliver Visible Value → Establish Deep Integration" — equally applicable to multinational companies' regional digital rollouts.</span>
+        </div>
+        <div class="project-outcomes">
+          <span class="outcome-tag"><span class="lang-zh">行业洞察</span><span class="lang-en">Industry Insight</span></span>
+          <span class="outcome-tag"><span class="lang-zh">产品策略</span><span class="lang-en">Product Strategy</span></span>
+          <span class="outcome-tag"><span class="lang-zh">B端思维</span><span class="lang-en">B2B Thinking</span></span>
+          <span class="outcome-tag"><span class="lang-zh">工业场景</span><span class="lang-en">Industrial Context</span></span>
+        </div>
+      </div>
+      <div class="project-arrow">→</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── THINKING (DARK) ── -->
+<div class="thinking-section">
+  <div class="thinking-inner">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title" style="color:var(--paper)">
+        <span class="lang-zh">我对数字化产品的理解</span>
+        <span class="lang-en">My Take on Digital Products</span>
+      </h2>
+      <div class="section-line" style="background:#333"></div>
+    </div>
+
+    <div class="thinking-grid">
+      <div class="thinking-card reveal">
+        <div class="thinking-icon">🔍</div>
+        <div class="thinking-card-title">
+          <span class="lang-zh">从真实痛点出发</span>
+          <span class="lang-en">Start from Real Pain Points</span>
+        </div>
+        <div class="thinking-card-text">
+          <span class="lang-zh">好的数字化产品不是技术的展示台，而是对真实业务痛点的精准回应。我习惯从"这件事为什么麻烦"开始思考，而不是从"这个技术能做什么"出发。</span>
+          <span class="lang-en">A good digital product is not a showcase for technology, but a precise response to real business pain. I prefer to start from "why is this troublesome" rather than "what can this technology do".</span>
+        </div>
+      </div>
+      <div class="thinking-card reveal">
+        <div class="thinking-icon">🧩</div>
+        <div class="thinking-card-title">
+          <span class="lang-zh">复杂系统中的局部创新</span>
+          <span class="lang-en">Local Innovation Within Complex Systems</span>
+        </div>
+        <div class="thinking-card-text">
+          <span class="lang-zh">在已经成熟的数字化体系中，产品经理的价值不在于颠覆，而在于<strong style="color:var(--accent-light)">找到那些"技术上已经具备、但实际上没用起来"的能力缝隙</strong>，并用本地化的方式让它们落地。</span>
+          <span class="lang-en">Within a mature digital ecosystem, the value of a product manager lies not in disruption, but in <strong style="color:var(--accent-light)">spotting capability gaps where the technology is already there, but the adoption is not</strong> — and bringing them to life through localized execution.</span>
+        </div>
+      </div>
+      <div class="thinking-card reveal">
+        <div class="thinking-icon">⚡</div>
+        <div class="thinking-card-title">
+          <span class="lang-zh">快速迭代的产品思维</span>
+          <span class="lang-en">Iterative Product Thinking</span>
+        </div>
+        <div class="thinking-card-text">
+          <span class="lang-zh">从V1.0到V3.0的自主迭代经历让我深刻理解：产品不是一次性交付物，而是在真实使用中持续进化的过程。发现问题、定义改进、快速验证，是我的工作节奏。</span>
+          <span class="lang-en">The V1.0 to V3.0 self-iteration journey deepened my conviction: a product is not a one-shot delivery, but a process of continuous evolution through real use. Identify, define improvements, rapidly validate — this is my rhythm.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="reveal">
+    <h2 class="contact-title">
+      <span class="lang-zh">期待与你<br><span>一起把好工具用起来</span></span>
+      <span class="lang-en">Let's<br><span>Make Good Tools Work</span></span>
+    </h2>
+    <p class="contact-desc">
+      <span class="lang-zh">如果你正在寻找一位兼具内容能力、产品思维与工业场景理解的伙伴，欢迎随时联系。</span>
+      <span class="lang-en">If you're looking for a partner with content capability, product thinking, and industrial context understanding, feel free to reach out.</span>
+    </p>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-value">yunzhij62@gmail.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-item-label">
+          <span class="lang-zh">所在城市</span><span class="lang-en">Location</span>
+        </div>
+        <div class="contact-item-value">
+          <span class="lang-zh">南京 · Nanjing</span>
+          <span class="lang-en">Nanjing, China</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🎓</div>
+        <div class="contact-item-label">
+          <span class="lang-zh">教育</span><span class="lang-en">Education</span>
+        </div>
+        <div class="contact-item-value">
+          <span class="lang-zh">南京大学硕士</span>
+          <span class="lang-en">M.A. Nanjing University</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 谢颖 · Xie Ying</span>
+  <span class="footer-text">Digital Product · Industrial Scenarios · AI Application</span>
+</footer>
+
+<script>
+  // ── Bilingual Toggle ──
+  function setLang(lang) {
+    document.body.setAttribute('data-lang', lang);
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+    // 更新 title
+    const title = document.querySelector('title');
+    if (title) {
+      title.textContent = lang === 'zh' ? title.dataset.zh : title.dataset.en;
+    }
+  }
+
+  // 初始化语言（读取上次选择）
+  (function() {
+    let saved = 'zh';
+    try { saved = localStorage.getItem('portfolio-lang') || 'zh'; } catch(e) {}
+    setLang(saved);
+  })();
+
+  // ── Scroll Reveal Animation ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
